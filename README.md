@@ -2,6 +2,7 @@
 
 ![Screenshots](/demo/signup.png)
 ![Screenshots](/demo/signin.png)
+![Screenshots](/demo/gallery.png)
 
 ### Running The Application
 
