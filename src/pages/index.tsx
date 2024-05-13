@@ -30,10 +30,9 @@ export default function Home() {
   const [seconds, setSeconds] = useState(30);
   const [timestamp, setTimestamp] = useState(0);
   const [generatedPin, setGeneratedPin] = useState("");
-  const router = useRouter()
+  const router = useRouter();
 
   const handleValidate = () => {
-  
     const inputInt = parseInt(otp);
     if (instance) {
       const encrypted = instance.encrypt32(inputInt);
@@ -57,9 +56,9 @@ export default function Home() {
       functionName: "validateTOTP",
       args: [`0x${value}`, timestamp],
     });
-    if(result){
-      toast("OTP Validated!")
-      router.push('/gallery')
+    if (result) {
+      toast("OTP Validated!");
+      router.push("/gallery");
     }
   };
 
@@ -200,7 +199,7 @@ const SignUpFlow = ({ mode, setMode }: any) => {
             <h3 className="text-sm text-gray-300">
               Sign up with your desired wallet
             </h3>
-            <span className="mb-4">
+            <span className="mb-[30px]">
               <ConnectKitButton />
             </span>
           </div>
@@ -270,7 +269,7 @@ const LoginFlow = ({ mode, setMode, handleValidate }: any) => {
             <h3 className="text-sm text-gray-300">
               Sign in with your desired wallet
             </h3>
-            <span className="mb-4">
+            <span className="mb-[30px]">
               <ConnectKitButton />
             </span>
           </div>
