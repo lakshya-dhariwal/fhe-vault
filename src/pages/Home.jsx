@@ -130,7 +130,7 @@ const SignUpFlow = ({ mode, setMode }) => {
         </div>
         {/* step 3 */}
 
-        <p className=' mt-4 mx-auto'>
+        <p className=' mt-4 pl-[55px] mx-auto text-sm text-gray-300'>
           Already have an account?{' '}
           <span
             className=' cursor-pointer underline text-blue-400 mx-1'
@@ -202,13 +202,13 @@ const LoginFlow = ({ mode, setMode }) => {
 
         {/* step 3 */}
 
-        <p className=' mt-4 mx-auto'>
+        <p className=' mt-4 mx-auto pl-[45px] text-sm text-gray-300'>
           No account?{' '}
           <span
             className=' cursor-pointer underline text-blue-400 mx-1'
             onClick={() => setMode('signup')}
           >
-            sign up
+            Sign up
           </span>{' '}
           instead
         </p>
