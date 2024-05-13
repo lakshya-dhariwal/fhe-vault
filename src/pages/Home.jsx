@@ -6,6 +6,7 @@ import { ModalPortal } from '@/components/Modal';
 import { useEffect, useRef, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { TbAuth2Fa } from 'react-icons/tb';
+import { FaCopy } from 'react-icons/fa';
 import OtpInput from 'react-otp-input';
 
 export default function Home() {
@@ -49,7 +50,7 @@ export default function Home() {
 
 const OnboardingModal = ({ onboarding, setOnboarding }) => {
   const [mode, setMode] = useState('login');
-  const [otp, setOtp] = useState('');
+
   return (
     <>
       {onboarding && (
@@ -77,10 +78,75 @@ const OnboardingModal = ({ onboarding, setOnboarding }) => {
 };
 
 const SignUpFlow = ({ mode, setMode }) => {
-  return <></>;
+  return (
+    <>
+      <p className='text-gray-300 font-semibold font-mono text-start w-full mt-3'>
+        Sign up using fluf.id
+      </p>
+      <div className='flex  flex-col w-full mx-2 my-5'>
+        <div className='w-full gap-4 flex flex-row'>
+          <div className='flex flex-col flex-grow'>
+            <div className='p-[10px] text-2xl  cursor-pointer rounded-full border-green-500 text-green-500 border-[2px]'>
+              <FaCheck />
+            </div>
+            <div className='w-[1px] h-full mx-auto flex-grow bg-[#464f5e]'></div>
+          </div>
+          <div className='h-full flex flex-col w-full gap-[10px] items-center'>
+            <h3 className='text-sm text-gray-300'>
+              Sign up with your desired wallet
+            </h3>
+            <button className='bg-yellow-400 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500'>
+              Connect Wallet
+            </button>
+          </div>
+        </div>
+        {/* step2 */}
+        <div className='w-full gap-4 flex flex-row'>
+          <div className='flex  flex-col flex-grow'>
+            <div className='p-[10px] text-2xl   cursor-pointer rounded-full border-[#464f5e] text-[#464f5e] border-[2px]'>
+              <TbAuth2Fa />
+            </div>
+            {/* <div className='w-[1px] h-full mx-auto flex-grow bg-[#464f5e]'></div> */}
+          </div>
+          <div className='h-full flex flex-col w-full gap-[10px] items-center'>
+            <h3 className='text-sm text-gray-300'>
+              Setup Multi Factor Authentication
+            </h3>
+            <div className='px-5 flex flex-col gap-2 py-2 text-center  rounded border border-[#474F5E]  bg-[#333333] '>
+              <p className=''>
+                Scan QR Code to add to authenticator <br /> or use Daap Code
+              </p>
+              <img
+                className='w-[200px] mx-auto bg-white '
+                src='/qr.png'
+                alt=''
+              />
+
+              <span className='p-1 mx-auto text-xl cursor-pointer text-yellow-400 flex flex-row items-center gap-1'>
+                0420 <FaCopy />
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* step 3 */}
+
+        <p className=' mt-4 mx-auto'>
+          Already have an account?{' '}
+          <span
+            className=' cursor-pointer underline text-blue-400 mx-1'
+            onClick={() => setMode('signup')}
+          >
+            Login
+          </span>{' '}
+          instead
+        </p>
+      </div>
+    </>
+  );
 };
 
 const LoginFlow = ({ mode, setMode }) => {
+  const [otp, setOtp] = useState('');
   return (
     <>
       {' '}
@@ -124,7 +190,7 @@ const LoginFlow = ({ mode, setMode }) => {
               renderInput={(props) => (
                 <input
                   {...props}
-                  className='p-2 text-3xl min-w-[52px] rounded bg-[#333333] text-yellow-400'
+                  className='p-2 text-3xl min-w-[52px] focus:ring-yellow-500 focus:border-yellow-500 rounded bg-[#333333] text-yellow-400'
                 />
               )}
             />
