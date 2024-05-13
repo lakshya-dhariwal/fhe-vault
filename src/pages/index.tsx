@@ -6,14 +6,95 @@ import { IoClose } from "react-icons/io5";
 import { TbAuth2Fa } from "react-icons/tb";
 import { FaCopy } from "react-icons/fa";
 import OtpInput from "react-otp-input";
-import dynamic from 'next/dynamic'
-const ModalPortal = dynamic(
-  () => import('@/components/Modal'),
-  { ssr: false }
-)
+import dynamic from "next/dynamic";
+import { ConnectKitButton } from "connectkit";
+import { createConfig, http, useAccount } from "wagmi";
+import { FhevmInstance } from "fhevmjs";
+import { generateFourDigitSecret, toHexString } from "@/utils/crypto";
+import { readContract } from "@wagmi/core";
+import { getInstance } from "@/utils/fheevm";
+import { TOTP } from "@/utils/TOTP";
+import { inco } from "@/utils/web3provider";
+const ModalPortal = dynamic(() => import("@/components/Modal"), { ssr: false });
+let instance: FhevmInstance;
+
 
 export default function Home() {
   const [onboarding, setOnboarding] = useState("false");
+  const [passcode, setPasscode] = useState("");
+  const { address } = useAccount();
+  const [verified, setVerified] = useState(false);
+  const [encryptedData, setEncryptedData] = useState("");
+  const [otp, setOTP] = useState<string>("");
+  const [seconds, setSeconds] = useState(30);
+  const [timestamp, setTimestamp] = useState(0);
+  const [generatedPin, setGeneratedPin] = useState("");
+
+
+  const handleValidate = () => {
+    const inputInt = parseInt(otp);
+    if (instance) {
+      const encrypted = instance.encrypt32(inputInt);
+      setEncryptedData(toHexString(encrypted));
+      validateOTP(toHexString(encrypted));
+    }
+  };
+
+  const validateOTP = async (value: any) => {
+    if (!address) return;
+
+    const config = createConfig({
+      chains: [inco],
+      transports: {
+        [inco.id]: http(),
+      },
+    });
+    const result = await readContract(config, {
+      abi: TOTP.abi,
+      address: '0x4d76178c3a4f2fd60ed38374f8c1acbb2a747f90',
+      functionName: "validateTOTP",
+      args: [`0x${value}`, timestamp],
+    });
+    console.log({ result });
+  };
+
+  useEffect(() => {
+    const regenerateTimestamp = () => {
+      const currentTimestamp = Math.floor(Date.now() / 1000);
+      const last5TimeStamp = currentTimestamp % 100000;
+      const pin = localStorage.getItem("pin");
+      const pinInt = parseInt(pin as string);
+      const secret = generateFourDigitSecret(pinInt, address as string);
+      // console.log("generated PIN:", secret)
+      setGeneratedPin(secret);
+      setTimestamp(currentTimestamp);
+      console.log(last5TimeStamp * parseInt(generatedPin));
+      setOTP(`${last5TimeStamp * parseInt(generatedPin)}`);
+      console.log("GENERATED TOTP", last5TimeStamp * parseInt(generatedPin));
+    };
+    const timer = setInterval(() => {
+      if (seconds === 30) {
+        regenerateTimestamp();
+      }
+      if (seconds > 0) {
+        setSeconds(seconds - 1);
+      } else {
+        clearInterval(timer);
+        setSeconds(30);
+      }
+    }, 1000);
+    return () => {
+      clearInterval(timer); // Cleanup the timer when the component unmounts
+    };
+  }, [seconds]);
+
+  // fetch FHE wasm
+  useEffect(() => {
+    async function fetchInstance() {
+      instance = await getInstance();
+    }
+    fetchInstance();
+  }, []);
   return (
     <>
       <main>
@@ -48,7 +129,7 @@ export default function Home() {
           </div>
         </section>
         <OnboardingModal
-          onboarding={onboarding}
+          onboarding={onboarding} handleValidate={handleValidate}
           setOnboarding={setOnboarding}
         />
       </main>
@@ -56,7 +137,7 @@ export default function Home() {
   );
 }
 
-const OnboardingModal = ({ onboarding, setOnboarding }: any) => {
+const OnboardingModal = ({ onboarding, setOnboarding ,handleValidate}: any) => {
   const [mode, setMode] = useState("login");
 
   return (
@@ -76,7 +157,7 @@ const OnboardingModal = ({ onboarding, setOnboarding }: any) => {
               🏛️ FHE Vault
             </h1>
 
-            {mode === "login" && <LoginFlow mode={mode} setMode={setMode} />}
+            {mode === "login" && <LoginFlow handleValidate={handleValidate} mode={mode} setMode={setMode} />}
             {mode === "signup" && <SignUpFlow mode={mode} setMode={setMode} />}
           </div>
         </ModalPortal>
@@ -103,9 +184,7 @@ const SignUpFlow = ({ mode, setMode }: any) => {
             <h3 className="text-sm text-gray-300">
               Sign up with your desired wallet
             </h3>
-            <button className="bg-yellow-400 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
-              Connect Wallet
-            </button>
+            <ConnectKitButton />
           </div>
         </div>
         {/* step2 */}
@@ -153,7 +232,7 @@ const SignUpFlow = ({ mode, setMode }: any) => {
   );
 };
 
-const LoginFlow = ({ mode, setMode }: any) => {
+const LoginFlow = ({ mode, setMode ,handleValidate}: any) => {
   const [otp, setOtp] = useState("");
   return (
     <>
@@ -173,9 +252,7 @@ const LoginFlow = ({ mode, setMode }: any) => {
             <h3 className="text-sm text-gray-300">
               Sign in with your desired wallet
             </h3>
-            <button className="bg-yellow-400 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
-              Connect Wallet
-            </button>
+            <ConnectKitButton />
           </div>
         </div>
         {/* step2 */}
@@ -193,7 +270,7 @@ const LoginFlow = ({ mode, setMode }: any) => {
             <OtpInput
               value={otp}
               onChange={setOtp}
-              numInputs={4}
+              numInputs={7}
               renderSeparator={<span className="mx-2">-</span>}
               renderInput={(props) => (
                 <input
@@ -202,7 +279,7 @@ const LoginFlow = ({ mode, setMode }: any) => {
                 />
               )}
             />
-            <button className="bg-yellow-400 mt-3 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
+            <button onClick={()=>handleValidate()} className="bg-yellow-400 mt-3 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
               Submit OTP
             </button>
           </div>
