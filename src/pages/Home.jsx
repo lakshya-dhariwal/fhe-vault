@@ -134,7 +134,7 @@ const SignUpFlow = ({ mode, setMode }) => {
           Already have an account?{' '}
           <span
             className=' cursor-pointer underline text-blue-400 mx-1'
-            onClick={() => setMode('signup')}
+            onClick={() => setMode('login')}
           >
             Login
           </span>{' '}
