@@ -1,12 +1,16 @@
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 import "cal-sans";
-import { ModalPortal } from "@/components/Modal";
 import { useEffect, useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { TbAuth2Fa } from "react-icons/tb";
 import { FaCopy } from "react-icons/fa";
 import OtpInput from "react-otp-input";
+import dynamic from 'next/dynamic'
+const ModalPortal = dynamic(
+  () => import('@/components/Modal'),
+  { ssr: false }
+)
 
 export default function Home() {
   const [onboarding, setOnboarding] = useState("false");

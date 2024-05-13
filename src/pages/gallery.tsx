@@ -1,7 +1,11 @@
 import { MdDriveFolderUpload } from "react-icons/md";
 import React, { useState, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { ModalPortal } from "@/components/Modal";
+import dynamic from 'next/dynamic'
+const ModalPortal = dynamic(
+  () => import('@/components/Modal'),
+  { ssr: false }
+)
 
 export default function Gallery() {
   const [fileUpload, setFileUpload] = useState<any>(false);

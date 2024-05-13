@@ -7,7 +7,7 @@ import { createPortal } from "react-dom";
 //     closeOnOutsideClick?: boolean; //optional
 //     modalId?: string; //id of the div in index.html
 // }
-export const ModalPortal = ({
+const ModalPortal = ({
   children,
   closeModal,
   closeOnOutsideClick = true,
@@ -18,7 +18,7 @@ export const ModalPortal = ({
     elRef.current = document.createElement("div");
   }
 
-  const handleOutsideClick = (e:any) => {
+  const handleOutsideClick = (e: any) => {
     //checks if click is on modal root or the children if it's on children closeModal won't run
     if (e.target === e.currentTarget) return closeModal();
   };
@@ -51,3 +51,5 @@ export const ModalPortal = ({
 
   return <>{createPortal(children, elRef?.current)}</>;
 };
+
+export default ModalPortal;
