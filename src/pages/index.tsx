@@ -1,118 +1,222 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
+import React from "react";
+import { FaCheck } from "react-icons/fa";
+import "cal-sans";
+import { ModalPortal } from "@/components/Modal";
+import { useEffect, useRef, useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { TbAuth2Fa } from "react-icons/tb";
+import { FaCopy } from "react-icons/fa";
+import OtpInput from "react-otp-input";
 
 export default function Home() {
+  const [onboarding, setOnboarding] = useState("false");
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <main>
+        <section className="bg-dark">
+          <div className="flex flex-col items-center justify-center min-h-screen text-white layout">
+            <div className="max-w-[650px] text-center rounded flex-col flex items-center gap-5 p-5">
+              <h1 style={{ fontFamily: "Cal Sans" }}> 🏛️ FHE Vault</h1>
+              <h2
+                className="text-gray-300 text-[25px] "
+                style={{ fontFamily: "Cal Sans" }}
+              >
+                Enable Multi Factor authentication and secure your files. Store
+                and own your data.
+              </h2>
+              <button
+                onClick={() => setOnboarding("true")}
+                className="bg-yellow-400 font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500"
+              >
+                Get Started
+              </button>
+            </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+            <footer className="absolute text-gray-300 font-mono bottom-2">
+              powered by{" "}
+              <a
+                href="https://fluf-id.vercel.app"
+                className="text-gray-300 hover:underline "
+              >
+                fluf.id
+              </a>
+            </footer>
+          </div>
+        </section>
+        <OnboardingModal
+          onboarding={onboarding}
+          setOnboarding={setOnboarding}
         />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
+
+const OnboardingModal = ({ onboarding, setOnboarding }: any) => {
+  const [mode, setMode] = useState("login");
+
+  return (
+    <>
+      {onboarding && (
+        <ModalPortal closeModal={() => setOnboarding(false)}>
+          <div className=" bg-[#0a0a0a]  relative text-[#d4d4d4] border-gray-800 rounded-lg  gap-2 p-8 px-[110px] border flex flex-col items-center">
+            <div className="absolute top-5 right-5 p-[2px] cursor-pointer rounded-full border-gray-100 border-[1px] ">
+              {" "}
+              <IoClose className="" onClick={() => setOnboarding(false)} />
+            </div>
+            <h1
+              style={{ fontFamily: "Cal Sans" }}
+              className="text-[25px] text-yellow-500 p-[10px]"
+            >
+              {" "}
+              🏛️ FHE Vault
+            </h1>
+
+            {mode === "login" && <LoginFlow mode={mode} setMode={setMode} />}
+            {mode === "signup" && <SignUpFlow mode={mode} setMode={setMode} />}
+          </div>
+        </ModalPortal>
+      )}
+    </>
+  );
+};
+
+const SignUpFlow = ({ mode, setMode }: any) => {
+  return (
+    <>
+      <p className="text-gray-300 font-semibold font-mono text-start w-full mt-3">
+        Sign up using fluf.id
+      </p>
+      <div className="flex  flex-col w-full mx-2 my-5">
+        <div className="w-full gap-4 flex flex-row">
+          <div className="flex flex-col flex-grow">
+            <div className="p-[10px] text-2xl  cursor-pointer rounded-full border-green-500 text-green-500 border-[2px]">
+              <FaCheck />
+            </div>
+            <div className="w-[1px] h-full mx-auto flex-grow bg-[#464f5e]"></div>
+          </div>
+          <div className="h-full flex flex-col w-full gap-[10px] items-center">
+            <h3 className="text-sm text-gray-300">
+              Sign up with your desired wallet
+            </h3>
+            <button className="bg-yellow-400 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
+              Connect Wallet
+            </button>
+          </div>
+        </div>
+        {/* step2 */}
+        <div className="w-full gap-4 flex flex-row">
+          <div className="flex  flex-col flex-grow">
+            <div className="p-[10px] text-2xl   cursor-pointer rounded-full border-[#464f5e] text-[#464f5e] border-[2px]">
+              <TbAuth2Fa />
+            </div>
+            {/* <div className='w-[1px] h-full mx-auto flex-grow bg-[#464f5e]'></div> */}
+          </div>
+          <div className="h-full flex flex-col w-full gap-[10px] items-center">
+            <h3 className="text-sm text-gray-300">
+              Setup Multi Factor Authentication
+            </h3>
+            <div className="px-5 flex flex-col gap-2 py-2 text-center  rounded border border-[#474F5E]  bg-[#333333] ">
+              <p className="">
+                Scan QR Code to add to authenticator <br /> or use Daap Code
+              </p>
+              <img
+                className="w-[200px] mx-auto bg-white "
+                src="/qr.png"
+                alt=""
+              />
+
+              <span className="p-1 mx-auto text-xl cursor-pointer text-yellow-400 flex flex-row items-center gap-1">
+                0420 <FaCopy />
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* step 3 */}
+
+        <p className=" mt-4 pl-[55px] mx-auto text-sm text-gray-300">
+          Already have an account?{" "}
+          <span
+            className=" cursor-pointer underline text-blue-400 mx-1"
+            onClick={() => setMode("login")}
+          >
+            Login
+          </span>{" "}
+          instead
+        </p>
+      </div>
+    </>
+  );
+};
+
+const LoginFlow = ({ mode, setMode }: any) => {
+  const [otp, setOtp] = useState("");
+  return (
+    <>
+      {" "}
+      <p className="text-gray-300 font-semibold font-mono text-start w-full mt-3">
+        Login using fluf.id
+      </p>
+      <div className="flex  flex-col w-full mx-2 my-5">
+        <div className="w-full gap-4 flex flex-row">
+          <div className="flex flex-col flex-grow">
+            <div className="p-[10px] text-2xl  cursor-pointer rounded-full border-green-500 text-green-500 border-[2px]">
+              <FaCheck />
+            </div>
+            <div className="w-[1px] h-full mx-auto flex-grow bg-[#464f5e]"></div>
+          </div>
+          <div className="h-full flex flex-col w-full gap-[10px] items-center">
+            <h3 className="text-sm text-gray-300">
+              Sign in with your desired wallet
+            </h3>
+            <button className="bg-yellow-400 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
+              Connect Wallet
+            </button>
+          </div>
+        </div>
+        {/* step2 */}
+        <div className="w-full gap-4 flex flex-row">
+          <div className="flex  flex-col flex-grow">
+            <div className="p-[10px] text-2xl   cursor-pointer rounded-full border-[#464f5e] text-[#464f5e] border-[2px]">
+              <TbAuth2Fa />
+            </div>
+            {/* <div className='w-[1px] h-full mx-auto flex-grow bg-[#464f5e]'></div> */}
+          </div>
+          <div className="h-full flex flex-col w-full gap-[10px] items-center">
+            <h3 className="text-sm text-gray-300">
+              Complete two factor authentication
+            </h3>
+            <OtpInput
+              value={otp}
+              onChange={setOtp}
+              numInputs={4}
+              renderSeparator={<span className="mx-2">-</span>}
+              renderInput={(props) => (
+                <input
+                  {...props}
+                  className="p-2 text-3xl min-w-[52px] focus:ring-yellow-500 focus:border-yellow-500 rounded bg-[#333333] text-yellow-400"
+                />
+              )}
+            />
+            <button className="bg-yellow-400 mt-3 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
+              Submit OTP
+            </button>
+          </div>
+        </div>
+
+        {/* step 3 */}
+
+        <p className=" mt-4 mx-auto pl-[45px] text-sm text-gray-300">
+          No account?{" "}
+          <span
+            className=" cursor-pointer underline text-blue-400 mx-1"
+            onClick={() => setMode("signup")}
+          >
+            Sign up
+          </span>{" "}
+          instead
+        </p>
+      </div>
+    </>
+  );
+};

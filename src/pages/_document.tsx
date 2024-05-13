@@ -5,6 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
+        <div className="" id="modal-portal"></div>
         <Main />
         <NextScript />
       </body>
