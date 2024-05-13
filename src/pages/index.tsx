@@ -20,7 +20,6 @@ import { useRouter } from "next/router";
 const ModalPortal = dynamic(() => import("@/components/Modal"), { ssr: false });
 let instance: FhevmInstance;
 
-
 export default function Home() {
   const [onboarding, setOnboarding] = useState("false");
   const [passcode, setPasscode] = useState("");
@@ -32,7 +31,6 @@ export default function Home() {
   const [timestamp, setTimestamp] = useState(0);
   const [generatedPin, setGeneratedPin] = useState("");
   const router = useRouter()
-
 
   const handleValidate = () => {
   
@@ -55,7 +53,7 @@ export default function Home() {
     });
     const result = await readContract(config, {
       abi: TOTP.abi,
-      address: '0x4d76178c3a4f2fd60ed38374f8c1acbb2a747f90',
+      address: "0x4d76178c3a4f2fd60ed38374f8c1acbb2a747f90",
       functionName: "validateTOTP",
       args: [`0x${value}`, timestamp],
     });
@@ -136,7 +134,8 @@ export default function Home() {
           </div>
         </section>
         <OnboardingModal
-          onboarding={onboarding} handleValidate={handleValidate}
+          onboarding={onboarding}
+          handleValidate={handleValidate}
           setOnboarding={setOnboarding}
         />
       </main>
@@ -144,7 +143,11 @@ export default function Home() {
   );
 }
 
-const OnboardingModal = ({ onboarding, setOnboarding ,handleValidate}: any) => {
+const OnboardingModal = ({
+  onboarding,
+  setOnboarding,
+  handleValidate,
+}: any) => {
   const [mode, setMode] = useState("login");
 
   return (
@@ -164,7 +167,13 @@ const OnboardingModal = ({ onboarding, setOnboarding ,handleValidate}: any) => {
               🏛️ FHE Vault
             </h1>
 
-            {mode === "login" && <LoginFlow handleValidate={handleValidate} mode={mode} setMode={setMode} />}
+            {mode === "login" && (
+              <LoginFlow
+                handleValidate={handleValidate}
+                mode={mode}
+                setMode={setMode}
+              />
+            )}
             {mode === "signup" && <SignUpFlow mode={mode} setMode={setMode} />}
           </div>
         </ModalPortal>
@@ -191,7 +200,9 @@ const SignUpFlow = ({ mode, setMode }: any) => {
             <h3 className="text-sm text-gray-300">
               Sign up with your desired wallet
             </h3>
-            <ConnectKitButton />
+            <span className="mb-4">
+              <ConnectKitButton />
+            </span>
           </div>
         </div>
         {/* step2 */}
@@ -239,7 +250,7 @@ const SignUpFlow = ({ mode, setMode }: any) => {
   );
 };
 
-const LoginFlow = ({ mode, setMode ,handleValidate}: any) => {
+const LoginFlow = ({ mode, setMode, handleValidate }: any) => {
   const [otp, setOtp] = useState("");
   return (
     <>
@@ -259,7 +270,9 @@ const LoginFlow = ({ mode, setMode ,handleValidate}: any) => {
             <h3 className="text-sm text-gray-300">
               Sign in with your desired wallet
             </h3>
-            <ConnectKitButton />
+            <span className="mb-4">
+              <ConnectKitButton />
+            </span>
           </div>
         </div>
         {/* step2 */}
@@ -286,7 +299,10 @@ const LoginFlow = ({ mode, setMode ,handleValidate}: any) => {
                 />
               )}
             />
-            <button onClick={()=>handleValidate()} className="bg-yellow-400 mt-3 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500">
+            <button
+              onClick={() => handleValidate()}
+              className="bg-yellow-400 mt-3 mb-[25px] font-semibold hover:opacity-90 text-gray-600 border-b-[2px] border-r-[2px] rounded p-[5px] border-yellow-500"
+            >
               Submit OTP
             </button>
           </div>
