@@ -1,4 +1,4 @@
-# Vite React Tailwind Starter
+# FHE Vault
 
 ![Screenshots](/demo/signup.png)
 ![Screenshots](/demo/signin.png)
