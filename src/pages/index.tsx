@@ -15,6 +15,8 @@ import { readContract } from "@wagmi/core";
 import { getInstance } from "@/utils/fheevm";
 import { TOTP } from "@/utils/TOTP";
 import { inco } from "@/utils/web3provider";
+import toast from "react-hot-toast/headless";
+import { useRouter } from "next/router";
 const ModalPortal = dynamic(() => import("@/components/Modal"), { ssr: false });
 let instance: FhevmInstance;
 
@@ -29,9 +31,11 @@ export default function Home() {
   const [seconds, setSeconds] = useState(30);
   const [timestamp, setTimestamp] = useState(0);
   const [generatedPin, setGeneratedPin] = useState("");
+  const router = useRouter()
 
 
   const handleValidate = () => {
+  
     const inputInt = parseInt(otp);
     if (instance) {
       const encrypted = instance.encrypt32(inputInt);
@@ -55,7 +59,10 @@ export default function Home() {
       functionName: "validateTOTP",
       args: [`0x${value}`, timestamp],
     });
-    console.log({ result });
+    if(result){
+      toast("OTP Validated!")
+      router.push('/gallery')
+    }
   };
 
   useEffect(() => {
