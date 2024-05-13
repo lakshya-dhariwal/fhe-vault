@@ -2,16 +2,17 @@ import { MdDriveFolderUpload } from 'react-icons/md';
 import React, { useState, useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { ModalPortal } from '@/components/Modal';
+import CustomLink from '@/components/CustomLink';
 
 export default function Gallery() {
   const [fileUpload, setFileUpload] = useState(false);
   return (
     <main className=' bg-dark'>
-      <section className=''>
+      <section className='h-screen flex flex-col'>
         <div className='mx-8 my-2'>
           <div className='flex flex-row items-center justify-between w-full'>
             <h1 className='text-xl ' style={{ fontFamily: 'Cal Sans' }}>
-              Vault
+              FHE Vault
             </h1>
             <button
               onClick={() => setFileUpload('true')}
@@ -25,123 +26,128 @@ export default function Gallery() {
           fileUpload={fileUpload}
           setFileUpload={setFileUpload}
         />
+        <div className='flex-grow h-0 overflow-y-scroll'>
+          <div class='container mx-auto '>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=1'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=1' />
+            </a>
 
-        <div class='container mx-auto'>
-          <a
-            href='https://source.unsplash.com/600x600/?sig=1'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=1' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x800/?sig=12'
+              data-lightbox='homePortfolio'
+              class='vertical'
+            >
+              <img src='https://source.unsplash.com/600x800/?sig=12' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x800/?sig=12'
-            data-lightbox='homePortfolio'
-            class='vertical'
-          >
-            <img src='https://source.unsplash.com/600x800/?sig=12' />
-          </a>
+            <a
+              href='https://source.unsplash.com/800x600/?sig=71'
+              data-lightbox='homePortfolio'
+              class='horizontal'
+            >
+              <img src='https://source.unsplash.com/800x600/?sig=71' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/800x600/?sig=71'
-            data-lightbox='homePortfolio'
-            class='horizontal'
-          >
-            <img src='https://source.unsplash.com/800x600/?sig=71' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=40'
+              data-lightbox='homePortfolio'
+            >
+              <iframe
+                src='https://www.youtube.com/embed/W0iCWFwwIaQ'
+                frameborder='0'
+              ></iframe>
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=40'
-            data-lightbox='homePortfolio'
-          >
-            <iframe
-              src='https://www.youtube.com/embed/W0iCWFwwIaQ'
-              frameborder='0'
-            ></iframe>
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=32'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=32' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=32'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=32' />
-          </a>
+            <a
+              href='https://source.unsplash.com/800x800/?sig=7'
+              data-lightbox='homePortfolio'
+              class='big'
+            >
+              <img src='https://source.unsplash.com/800x800/?sig=7' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/800x800/?sig=7'
-            data-lightbox='homePortfolio'
-            class='big'
-          >
-            <img src='https://source.unsplash.com/800x800/?sig=7' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=111'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=111' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=111'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=111' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x800/?sig=94'
+              data-lightbox='homePortfolio'
+              class='vertical'
+            >
+              <img src='https://source.unsplash.com/600x800/?sig=94' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x800/?sig=94'
-            data-lightbox='homePortfolio'
-            class='vertical'
-          >
-            <img src='https://source.unsplash.com/600x800/?sig=94' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=11'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=11' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=11'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=11' />
-          </a>
+            <a
+              href='https://source.unsplash.com/800x600/?sig=68'
+              data-lightbox='homePortfolio'
+              class='horizontal'
+            >
+              <img src='https://source.unsplash.com/800x600/?sig=68' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/800x600/?sig=68'
-            data-lightbox='homePortfolio'
-            class='horizontal'
-          >
-            <img src='https://source.unsplash.com/800x600/?sig=68' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=24'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=24' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=24'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=24' />
-          </a>
+            <a
+              href='https://source.unsplash.com/800x800/?sig=55'
+              data-lightbox='homePortfolio'
+              class='big'
+            >
+              <img src='https://source.unsplash.com/800x800/?sig=55' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/800x800/?sig=55'
-            data-lightbox='homePortfolio'
-            class='big'
-          >
-            <img src='https://source.unsplash.com/800x800/?sig=55' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=56'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=56' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/600x600/?sig=56'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=56' />
-          </a>
+            <a
+              href='https://source.unsplash.com/800x600/?sig=186'
+              data-lightbox='homePortfolio'
+              class='horizontal'
+            >
+              <img src='https://source.unsplash.com/800x600/?sig=186' />
+            </a>
 
-          <a
-            href='https://source.unsplash.com/800x600/?sig=186'
-            data-lightbox='homePortfolio'
-            class='horizontal'
-          >
-            <img src='https://source.unsplash.com/800x600/?sig=186' />
-          </a>
-
-          <a
-            href='https://source.unsplash.com/600x600/?sig=117'
-            data-lightbox='homePortfolio'
-          >
-            <img src='https://source.unsplash.com/600x600/?sig=117' />
-          </a>
+            <a
+              href='https://source.unsplash.com/600x600/?sig=117'
+              data-lightbox='homePortfolio'
+            >
+              <img src='https://source.unsplash.com/600x600/?sig=117' />
+            </a>
+          </div>
         </div>
+        <footer className='absolute text-gray-300 font-mono bottom-2 pl-2'>
+          powered by{' '}
+          <CustomLink href='https://fluf-id.vercel.app'>fluf.id</CustomLink>
+        </footer>
       </section>
     </main>
   );
