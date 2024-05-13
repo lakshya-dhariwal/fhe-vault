@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* for modals */
+#modal-portal {
+  /* backdrop-filter: blur(10px); */
+  background-color: rgba(0, 0, 0, 0.5);
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#modal-portal:empty {
+  display: none;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
